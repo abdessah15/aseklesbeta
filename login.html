@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
+    <title>Connexion - Asekles</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,26 +16,26 @@
             margin: 0;
         }
         form {
-            background-color: #2a2a2a;
+            background-color: #333;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
-        input {
-            display: block;
-            margin: 10px 0;
-            padding: 10px;
+        input[type="text"], input[type="password"] {
             width: 100%;
+            padding: 10px;
+            margin: 10px 0;
             border: none;
             border-radius: 5px;
         }
         button {
             background-color: #e50914;
-            color: #fff;
-            padding: 10px;
+            color: white;
             border: none;
+            padding: 10px;
             border-radius: 5px;
             cursor: pointer;
+            width: 100%;
         }
         button:hover {
             background-color: #a10000;
@@ -43,30 +43,21 @@
     </style>
 </head>
 <body>
-    <form id="loginForm">
+    <form action="index.html" method="POST" onsubmit="return handleLogin(event);">
         <h2>Connexion</h2>
-        <input type="text" id="username" placeholder="Nom d'utilisateur" required>
-        <input type="password" id="password" placeholder="Mot de passe" required>
+        <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+        <input type="password" name="password" placeholder="Mot de passe" required>
         <button type="submit">Se connecter</button>
-        <p>Pas encore membre? <a href="signup.html" style="color: #e50914;">Inscrivez-vous ici</a></p>
+        <p><a href="signup.html" style="color: #e50914;">Inscription</a></p>
     </form>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prévenir l'envoi du formulaire
-
-            // Récupérer les valeurs
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            // Vérification basique
-            if (username === '' || password === '') {
-                alert('Veuillez remplir tous les champs.');
-            } else {
-                // Ici, vous pourriez envoyer les données au serveur
-                alert('Connexion réussie pour ' + username + '!');
-            }
-        });
+        function handleLogin(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            // Here you can add your authentication logic
+            // If login is successful, redirect to index.html
+            window.location.href = "index.html"; // Redirect to the movie list page
+        }
     </script>
 </body>
 </html>
