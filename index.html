@@ -4,123 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asekles</title>
-
-    <!-- Favicon -->
-    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="image/png">
-
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #1c1c1c; /* Fond sombre */
             color: #f1f1f1; /* Texte clair */
-            padding-bottom: 60px; /* Espace réservé pour le pied de page */
+            text-align: center;
+            padding: 20px;
         }
-
         header {
             background-color: #e50914; /* Rouge vif */
             padding: 20px;
-            text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
-
-        header h1 {
+        h1 {
             margin: 0;
             font-size: 2.5em;
             color: #fff;
         }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            padding: 10px;
-            background-color: #333; /* Gris foncé */
-        }
-
-        nav a {
+        #login-button {
+            padding: 10px 20px;
+            background-color: #4285F4; /* Couleur Google */
             color: #fff;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        .content {
-            padding: 20px;
-        }
-
-        .movie-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .movie-item {
-            background-color: #2a2a2a; /* Gris très foncé */
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .movie-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-        }
-
-        .movie-item img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .movie-item h3 {
-            margin-top: 10px;
             font-size: 1.2em;
-            color: #e50914; /* Rouge vif pour le titre */
-            cursor: pointer;
         }
-
-        .movie-item h3:hover {
-            text-decoration: underline;
+        #login-button:hover {
+            background-color: #357ae8; /* Couleur au survol */
         }
-
-        .download-button {
-            display: inline-block;
-            background-color: #e50914; /* Rouge vif */
-            color: #fff; /* Couleur du texte */
-            padding: 15px 30px; /* Taille du bouton */
-            border-radius: 10px; /* Coins arrondis */
-            text-decoration: none; /* Pas de soulignement */
-            font-weight: bold; /* Texte en gras */
-            text-align: center; /* Centrer le texte */
-            font-size: 1.2em; /* Taille du texte */
-            transition: background-color 0.3s ease; /* Transition pour le survol */
-            margin: 20px 0; /* Marge au-dessus et en-dessous */
-        }
-
-        .download-button:hover {
-            background-color: #a10000; /* Couleur au survol */
-        }
-
-        footer {
-            background-color: #333; /* Gris foncé */
-            color: #f1f1f1;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Ajoute un espace pour le pied de page */
-        .footer-space {
-            height: 60px;
+        .movie-content {
+            display: none;
         }
     </style>
 </head>
@@ -129,17 +45,14 @@
         <h1>ⵣ Asekles ⵣ</h1>
     </header>
 
-    <nav>
-        <a href="index.html">Accueil</a>
-        <a href="films.html">Films</a>
-        <a href="series.html">Séries</a>
-        <a href="new.html">Nouveautés</a>
-        <a href="login.html">Connexion</a> <!-- Lien لتسجيل الدخول -->
-        <a href="signup.html">Inscription</a> <!-- Lien للتسجيل -->
-    </nav>
+    <div id="login-container">
+        <h2>Connexion avec Google</h2>
+        <button id="login-button">Se connecter avec Google</button>
+    </div>
 
-    <div class="content">
-        <h2>Recommandé pour vous</h2>
+    <div class="movie-content" id="movie-content">
+        <h2>Bienvenue à Asekles</h2>
+        <p>Ici, vous pouvez explorer nos films et séries.</p>
         <div class="movie-grid" id="movie-grid">
             <!-- Film 1 -->
             <div class="movie-item">
@@ -177,34 +90,51 @@
                 </a>
             </div>
         </div>
-
-        <!-- Bouton de téléchargement de l'application -->
-        <a class="download-button" href="https://drive.google.com/file/d/1xWQIGj-tCtTueZAnauw1717PzvE_uj8R/view?usp=sharing">Téléchargez l'application</a>
     </div>
-
-    <!-- Ajoute un espace pour le pied de page -->
-    <div class="footer-space"></div>
 
     <footer>
         <p>&copy; 2024 Asekles.com. Tous droits réservés.</p>
     </footer>
 
+    <script src="https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.20.0/firebase-auth.js"></script>
     <script>
-        // Fonction pour mélanger les éléments de la grille
-        function shuffleMovies() {
-            const grid = document.getElementById('movie-grid');
-            const movies = Array.from(grid.children);
-            // Mélanger les films
-            movies.sort(() => Math.random() - 0.5);
-            // Vider la grille
-            grid.innerHTML = '';
-            // Ajouter les films dans le nouvel ordre
-            movies.forEach(movie => grid.appendChild(movie));
-        }
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY", // استبدل بـ API الخاص بك
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com", // استبدل بـ Project ID الخاص بك
+            projectId: "YOUR_PROJECT_ID", // استبدل بـ Project ID الخاص بك
+            storageBucket: "YOUR_PROJECT_ID.appspot.com", // استبدل بـ Project ID الخاص بك
+            messagingSenderId: "YOUR_SENDER_ID", // استبدل بـ Sender ID الخاص بك
+            appId: "YOUR_APP_ID" // استبدل بـ App ID الخاص بك
+        };
 
-        // Mélanger les films au chargement de la page
-        window.onload = shuffleMovies;
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // زر تسجيل الدخول
+        document.getElementById('login-button').addEventListener('click', function() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then((result) => {
+                const user = result.user;
+                console.log('Utilisateur connecté: ', user);
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('movie-content').style.display = 'block';
+            }).catch((error) => {
+                console.error('Erreur de connexion: ', error);
+            });
+        });
+
+        // التحقق من حالة تسجيل الدخول
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('movie-content').style.display = 'block';
+            } else {
+                document.getElementById('login-container').style.display = 'block';
+                document.getElementById('movie-content').style.display = 'none';
+            }
+        });
     </script>
-
 </body>
 </html>
