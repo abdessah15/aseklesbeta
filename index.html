@@ -1,71 +1,183 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Netflix-like Player</title>
-  <style>
-    body {
-      margin: 0;
-      background-color: #141414;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      color: #fff;
-    }
-    .player-container {
-      position: relative;
-      width: 640px;
-      max-width: 100%;
-      aspect-ratio: 16 / 9;
-      background-color: #000;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-      overflow: hidden;
-    }
-    .iframe-wrapper {
-      width: 100%;
-      height: 100%;
-    }
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-    .controls-overlay {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      padding: 10px;
-      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .play-btn {
-      background: #e50914;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      color: #fff;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background 0.3s;
-    }
-    .play-btn:hover {
-      background: #f40612;
-    }
-    .video-info {
-      font-size: 14px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visionnage de Film - Asekles</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="temp_segment_66d5163aa9dbf.png">
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212; /* Fond sombre */
+            color: #f1f1f1; /* Texte clair */
+            overflow-x: hidden; /* Empêche le défilement horizontal */
+        }
+
+        .header {
+            background-color: #e50914; /* Rouge vif */
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #fff;
+            font-size: 1.5em;
+        }
+
+        .header .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        .header .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh; /* Assure que le conteneur prend toute la hauteur visible */
+        }
+
+        .film-info {
+            max-width: 1000px;
+            width: 100%;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            color: #f1f1f1;
+        }
+
+        .film-info h2 {
+            margin: 0 0 10px;
+            color: #e50914; /* Rouge vif pour le titre */
+            font-size: 2em; /* Taille du titre plus grande */
+        }
+
+        .film-info p {
+            margin: 10px 0;
+            font-size: 1.2em; /* Taille du texte plus grande */
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            padding-top: 56.25%; /* Ratio 16:9 */
+            background-color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .suspense-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .suspense-button {
+            background-color: #e50914; /* Rouge vif */
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 1.2em;
+            margin: 10px;
+        }
+
+        .suspense-button:hover {
+            background-color: #a10000;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #e50914;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            background-color: #a10000;
+        }
+
+        footer {
+            background-color: #333; /* Gris foncé */
+            color: #f1f1f1;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-  <div class="player-container">
-    <div class="iframe-wrapper">
-      <iframe src="https://oneupload.to/embed-tuyljqgwo5mq.html" allowfullscreen></iframe>
-      </div>
+ 
+    <div class="container">
+        <div class="film-info">
+            <h2>Cirta</h2>
+            <p><strong>Genre :</strong> Histoire, aventure</p>
+            <p><strong>Date de sortie :</strong> 2022</p>
+            <p><strong>Synopsis :</strong> Ttkemmilen abrid-nsen Yuba, kusila, Kahina, d Massi ttnadint ad seɣlin tagezzant aken ad erren tamurt umaziɣ.</p>
+        </div>
+
+        <div class="video-container">
+            <iframe src="https://oneupload.to/embed-jj3cs89kc56q.html" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerpolicy="unsafe-url"></iframe>
+        </div>
+
+        <div class="suspense-container">
+            <!-- Ajouter du contenu ici si nécessaire -->
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Asekles.com. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function revealMore() {
+            alert('Plus de détails à venir !');
+        }
+    </script>
+
 </body>
 </html>
