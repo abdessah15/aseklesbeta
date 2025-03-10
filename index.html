@@ -3,181 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visionnage de Film - Asekles</title>
-
-    <!-- Favicon -->
-    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="temp_segment_66d5163aa9dbf.png">
-    
+    <title>Asekles</title>
+    <link rel="icon" href="temp_segment_66d5163aa9dbf.png" type="image/png">
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #121212; /* Fond sombre */
-            color: #f1f1f1; /* Texte clair */
-            overflow-x: hidden; /* Empêche le défilement horizontal */
-        }
-
-        .header {
-            background-color: #e50914; /* Rouge vif */
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        .header h1 {
-            margin: 0;
-            color: #fff;
-            font-size: 1.5em;
-        }
-
-        .header .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-        }
-
-        .header .nav-links a:hover {
-            text-decoration: underline;
-        }
-
-        .container {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh; /* Assure que le conteneur prend toute la hauteur visible */
-        }
-
-        .film-info {
-            max-width: 1000px;
-            width: 100%;
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
+            background-color: #000;
             color: #f1f1f1;
         }
 
-        .film-info h2 {
-            margin: 0 0 10px;
-            color: #e50914; /* Rouge vif pour le titre */
-            font-size: 2em; /* Taille du titre plus grande */
-        }
-
-        .film-info p {
-            margin: 10px 0;
-            font-size: 1.2em; /* Taille du texte plus grande */
-        }
-
-        .video-container {
-            width: 100%;
-            max-width: 1000px;
-            position: relative;
-            padding-top: 56.25%; /* Ratio 16:9 */
-            background-color: #000;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .suspense-container {
+        header {
+            background: linear-gradient(45deg, #ff0066, #6600ff);
+            padding: 10px;
             text-align: center;
-            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
-        .suspense-button {
-            background-color: #e50914; /* Rouge vif */
+        header h1 {
+            margin: 0;
+            font-size: 2em;
             color: #fff;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 8px;
+            background-color: #111;
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
             font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ff0066;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 10px;
+        }
+
+        .movie-item {
+            background-color: #222;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .movie-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(255, 0, 102, 0.6);
+        }
+
+        .movie-item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .movie-item h3 {
+            margin-top: 10px;
             font-size: 1.2em;
-            margin: 10px;
-        }
-
-        .suspense-button:hover {
-            background-color: #a10000;
-        }
-
-        .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: #e50914;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            z-index: 1000;
-        }
-
-        .back-button:hover {
-            background-color: #a10000;
+            color: #ff0066;
         }
 
         footer {
-            background-color: #333; /* Gris foncé */
+            background-color: #111;
             color: #f1f1f1;
             text-align: center;
-            padding: 10px;
-            position: relative;
+            padding: 8px;
+            position: fixed;
             bottom: 0;
+            left: 0;
             width: 100%;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
- 
-    <div class="container">
-        <div class="film-info">
-            <h2>Cirta</h2>
-            <p><strong>Genre :</strong> Histoire, aventure</p>
-            <p><strong>Date de sortie :</strong> 2022</p>
-            <p><strong>Synopsis :</strong> Ttkemmilen abrid-nsen Yuba, kusila, Kahina, d Massi ttnadint ad seɣlin tagezzant aken ad erren tamurt umaziɣ.</p>
-        </div>
+    <header>
+        <h1>ASEKLES</h1>
+    </header>
 
-        <div class="video-container">
-            <iframe src="https://oneupload.to/embed-jj3cs89kc56q.html" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerpolicy="unsafe-url"></iframe>
-        </div>
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="films.html">Films</a>
+        <a href="series.html">Séries</a>
+        <a href="new.html">Nouveautés</a>
+    </nav>
 
-        <div class="suspense-container">
-            <!-- Ajouter du contenu ici si nécessaire -->
+    <div class="content">
+        <h2>Recommandé pour vous</h2>
+        <div class="movie-grid">
+            <!-- Films -->
+            <div class="movie-item">
+                <img src="Sans titre2.jpg" alt="Film 1">
+                <h3>Cirta</h3>
+            </div>
+            <div class="movie-item">
+                <img src="Sans titre.jpg" alt="Film 2">
+                <h3>Amezruy n tmurt</h3>
+            </div>
+            <div class="movie-item">
+                <img src="Sans titre3.jpg" alt="Film 3">
+                <h3>Tamacahut n Wakli</h3>
+            </div>
+            <div class="movie-item">
+                <img src="Sans titre4.jpg" alt="Film 4">
+                <h3>Waɛli ak d tzizwit</h3>
+            </div>
+            <div class="movie-item">
+                <img src="Sans titre5.jpg" alt="Film 5">
+                <h3>Zorro</h3>
+            </div>
+            <div class="movie-item">
+                <img src="photo_6005844016756802905_x.jpg" alt="Film 6">
+                <h3>Ikerri izimer</h3>
+            </div>
+            <div class="movie-item">
+                <img src="Sans titre9.jpg" alt="Film 7">
+                <h3>Tom et Jerry à New York</h3>
+            </div>
+            <div class="movie-item">
+                <img src="Sans titre6.jpg" alt="Film 8">
+                <h3>Maca ak d Micka</h3>
+            </div>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2024 Asekles.com. Tous droits réservés.</p>
+        <p>&copy; 2025 Asekles.com. Tous droits réservés.</p>
     </footer>
-
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-
-        function revealMore() {
-            alert('Plus de détails à venir !');
-        }
-    </script>
-
 </body>
 </html>
